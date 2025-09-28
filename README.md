@@ -188,7 +188,7 @@ JOIN roles ON roles.nome = 'GERENTE_FINANCEIRO'
 SET usuarios.role_id = roles.id
 WHERE usuarios.email = 'joao.silva@techcorp.com.br';
 ```
-![evidencia](role_alt.png)
+![evidencia](Banco_fiscal/imagens/role_alt.png)
 
 ### Atualizações de Documentos Fiscais
 
@@ -209,9 +209,9 @@ SET status_processamento = 'CANCELADO',
 WHERE numero_documento = '001' AND empresa_id = 1;
 ```
 
-![evidencia](status_c.png)
+![evidencia](Banco_fiscal/imagens/status_c.png)
 
-![evidencia](valor_doc.png)
+![evidencia](Banco_fiscal/imagens/valor_doc.png)
 
 ---
 
@@ -244,7 +244,7 @@ GROUP BY
     p.id, p.nome, p.data_inicio, p.status, p.orcamento_total, u.nome, e.razao_social -- ADICIONADO AO GROUP BY
 ORDER BY p.data_inicio DESC;
 ```
-![evidencia](ordem_atv.png)
+![evidencia](Banco_fiscal/imagens/ordem_atv.png)
 
 ### Consulta de Usuários Ativos
 
@@ -265,7 +265,7 @@ ORDER BY u.nome;
 
 **Usa índice**: `idx_email` na tabela usuarios
 
-![evidencia](user_atv.png)
+![evidencia](Banco_fiscal/imagens/user_atv.png)
 
 ### Consulta de Documentos por Tipo
 
@@ -286,7 +286,7 @@ ORDER BY e.razao_social, df.tipo_documento;
 - `idx_tipo_documento` para GROUP BY
 - FK `empresa_id` para JOIN
 
-![evidencia](doc_empresa_tipo.png)
+![evidencia](Banco_fiscal/imagens/doc_empresa_tipo.png)
 
 ### Consulta de Centros de Custo e Projetos
 
@@ -306,7 +306,7 @@ ORDER BY total_projetos DESC;
 - `idx_nome` em centros_custo
 - FK `empresa_id` em ambas tabelas
 
-![evidencia](centro_proj.png)
+![evidencia](Banco_fiscal/imagens/centro_proj.png)
 
 ---
 
@@ -383,7 +383,6 @@ O modelo **não atende estritamente à 3NF** devido à **denormalização seleti
 ---
 *Esta documentação serve como referência para desenvolvedores, administradores de banco de dados e usuários do Sistema Fiscal que estejam explorando este projeto.*
 
-[📑 Documentação Completa](./docs/manual.pdf)
-
+[📑 Documentação Completa]("Banco_fiscal/Banco Doc Final.pdf")
 
 ---
