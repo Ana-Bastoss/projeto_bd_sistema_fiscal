@@ -1,6 +1,6 @@
-# Sistema Fiscal - Documentação Técnica Completa - Updates e Selects + adicionais
+# Sistema Fiscal - Updates e Selects + adicionais
 
-> **Sistema de Gestão Fiscal e Contábil** - Banco de dados robusto para controle de documentos fiscais, provisionamentos, contas a pagar e lançamentos contábeis.
+> **Sistema de Gestão Fiscal e Contábil** - Banco de dados para controle de documentos fiscais, provisionamentos, contas a pagar e lançamentos contábeis.
 
 ---
 
@@ -45,13 +45,13 @@
 
 ## Visão Geral
 
-O **Sistema Fiscal** é uma solução para gestão de documentos fiscais, controle financeiro e conformidade, possuindo **22 tabelas** organizadas com seus tipos de Entidades.
+O **Sistema Fiscal** é uma solução para gestão de documentos fiscais, controle financeiro e conformidade, possuindo **22 tabelas** organizadas de acordo com seus tipos de Entidades, que constam na Documentação final completa!
 
 ## Características Principais
 
 - **Multi-empresa**: Suporte a matriz e filiais
-- **Controle de Acesso**: Sistema de roles hierárquico (5 níveis)
-- **Documentos Fiscais**: NFe, NFSe, CTe, Boletos, Contratos
+- **Controle de Acesso**: Sistema de roles de usuários hierárquico (5 níveis)
+- **Documentos Fiscais**: NFe, NFSe, CTe, Boletos, Contratos, Nacionais, Internacions
 - **Gestão Financeira**: Provisionamentos e contas a pagar
 - **Contabilidade**: Lançamentos contábeis automatizados
 - **Workflow**: Sistema de aprovações configurável
