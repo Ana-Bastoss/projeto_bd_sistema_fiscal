@@ -2,6 +2,8 @@
 
 > **Sistema de Gestão Fiscal e Contábil** - Banco de dados para controle de documentos fiscais, provisionamentos, contas a pagar e lançamentos contábeis.
 
+[👩🏽‍💻SCRIPT DO BANCO](Banco_fiscal/Sistema_fiscal.sql)
+
 ---
 
 # Índice
@@ -383,6 +385,6 @@ O modelo **não atende estritamente à 3NF** devido à **denormalização seleti
 ---
 *Esta documentação serve como referência para desenvolvedores, administradores de banco de dados e usuários do Sistema Fiscal que estejam explorando este projeto.*
 
-[📑 Documentação Completa]("Banco_fiscal/Banco Doc Final.pdf")
+[📑 Documentação Completa](Banco_fiscal/Banco_Doc_Final.pdf)
 
 ---
