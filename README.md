@@ -988,29 +988,8 @@ Após a importação, o banco **sistema_fiscal** estará pronto para uso.
 - Implementar sistema de aprovação com workflow visual  
 - Otimizar consultas de relatórios com cache e paginação avançada  
 - Suporte a ambiente distribuído (replicação + failover)
-- Criação de Procedures, Views e Triggers implementadas
-
-
-## Equipe de Desenvolvimento
-
-Este projeto foi desenvolvido pelo **Grupo 1**:
-
-- **Ana Beatriz** - Desenvolvedora
-- **Brenda Mykaelle** - Desenvolvedora  
-- **Paulo Higa** - Desenvolvedor
-
-### Sobre o Projeto
-
-O **Sistema Fiscal (Bare)** foi desenvolvido como uma solução completa para gestão fiscal e contábil empresarial, integrando processos que tradicionalmente são realizados de forma manual e descentralizada. O sistema foi projetado para atender empresas de médio e grande porte que necessitam de controle rigoroso sobre documentos fiscais, provisionamentos e fluxo de caixa.
-
-### Objetivos do Projeto
-
-- **Automatização**: Redução de trabalho manual através de importação automática de XMLs
-- **Rastreabilidade**: Histórico completo de todas as ações realizadas no sistema
-- **Conformidade**: Garantia de conformidade com normas fiscais e contábeis
-- **Eficiência**: Otimização do fluxo de trabalho desde a entrada do documento até o pagamento
-- **Transparência**: Dashboard com indicadores em tempo real para tomada de decisão
-
+- Criação de Procedures, Views e Triggers complementares
+  
 ---
 
 ## 🔍 Detalhes Técnicos Adicionais
@@ -1145,6 +1124,22 @@ uploads/
 - **Validação de Tipos**: Pydantic valida todos os tipos de dados
 - **SQL Injection**: Proteção via parâmetros nomeados no SQLAlchemy
 - **XSS**: Sanitização de dados de entrada
+
+## Equipe de Desenvolvimento
+
+Este projeto foi desenvolvido pelo **Grupo 1**:
+
+- **Ana Beatriz** - Desenvolvedora
+- **Brenda Mykaelle** - Desenvolvedora  
+- **Paulo Higa** - Desenvolvedor
+
+### Objetivos do Projeto(Conclusão final)
+
+- **Automatização**: Redução de trabalho manual através de importação automática de XMLs
+- **Rastreabilidade**: Histórico completo de todas as ações realizadas no sistema
+- **Conformidade**: Garantia de conformidade com normas fiscais e contábeis
+- **Eficiência**: Otimização do fluxo de trabalho desde a entrada do documento até o pagamento
+- **Transparência**: Dashboard com indicadores em tempo real para tomada de decisão
 
 ---
 
