@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wdth,wght@0,75..100,300..800;1,75..100,300..800&display=swap");
+/* fonte de texto */
 
 * {
   margin: 0;
@@ -8,9 +9,7 @@
 }
 
 html {
-  /* Força a barra de rolagem vertical a estar sempre visível.
-     Isso impede que a página "pule" quando o conteúdo 
-     ultrapassa a altura da tela (como ao abrir o menu). */
+  /* Mantém a barra de rolagem sempre visível para evitar aquele "pulo" chato quando o conteúdo cresce */
   overflow-y: scroll;
 }
 
@@ -18,6 +17,10 @@ body {
   min-height: 100vh;
   background: white;
 }
+
+/* ===========================
+   Sidebar (Menu Lateral)
+   =========================== */
 
 .sidebar {
   width: 270px;
@@ -81,6 +84,7 @@ body {
   transform: rotate(180deg);
 }
 
+/* Navegação da sidebar */
 .sidebar-nav .nav-list {
   list-style: none;
   display: flex;
@@ -125,6 +129,7 @@ body {
   position: relative;
 }
 
+/* Tooltips que aparecem quando a sidebar está recolhida */
 .primary-nav .nav-tooltip {
   position: absolute;
   top: -10px;
@@ -183,7 +188,10 @@ body {
   width: 100%;
 }
 
-/* Estilos para o botão flutuante de acessibilidade */
+/* ===========================
+   Botão de Acessibilidade
+   =========================== */
+
 .accessibility-btn {
   position: fixed;
   bottom: 30px;
@@ -222,9 +230,10 @@ body {
   background: #27ae60;
 }
 
-/* Adicionando estilos para a página de Documentos Fiscais */
+/* ===========================
+   Área de Conteúdo Principal
+   =========================== */
 
-/* Layout principal */
 .main-content {
   margin-left: 270px;
   padding: 30px;
@@ -233,6 +242,7 @@ body {
   transition: margin-left 0.4s ease;
 }
 
+/* Quando a sidebar está recolhida, o conteúdo ocupa mais espaço */
 .sidebar.collapsed ~ .main-content {
   margin-left: 85px;
 }
@@ -289,7 +299,10 @@ body {
   box-shadow: 0 0 0 3px rgba(73, 96, 155, 0.1);
 }
 
-/* Seção de filtros */
+/* ===========================
+   Filtros
+   =========================== */
+
 .filters-section {
   background: white;
   padding: 25px;
@@ -347,7 +360,10 @@ body {
   flex-wrap: wrap;
 }
 
-/* Botões */
+/* ===========================
+   Botões
+   =========================== */
+
 .btn {
   display: flex;
   align-items: center;
@@ -381,22 +397,23 @@ body {
   background: #b2bec3;
 }
 
-/* Tabela */
-/* REGRA CORRIGIDA */
+/* ===========================
+   Tabelas
+   =========================== */
+
 .table-container {
   background: white;
   border-radius: 12px;
-  overflow-x: auto; /* Permite rolar a tabela horizontalmente se for larga */
-  overflow-y: visible; /* Permite o menu "vazar" verticalmente */
+  overflow-x: auto;
+  overflow-y: visible;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   margin-bottom: 30px;
 }
 
-/* Ajuste na tabela para acomodar mais colunas */
 .documents-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px; /* Reduzido para caber mais colunas */
+  font-size: 13px;
 }
 
 .documents-table thead {
@@ -405,11 +422,11 @@ body {
 }
 
 .documents-table th {
-  padding: 14px 12px; /* Reduzido o padding horizontal */
+  padding: 14px 12px;
   text-align: left;
   font-weight: 600;
   font-size: 13px;
-  white-space: nowrap; /* Evita quebra de linha nos cabeçalhos */
+  white-space: nowrap;
 }
 
 .documents-table tbody tr {
@@ -422,12 +439,12 @@ body {
 }
 
 .documents-table td {
-  padding: 14px 12px; /* Reduzido o padding horizontal */
+  padding: 14px 12px;
   font-size: 13px;
   color: #2d3436;
 }
 
-/* Badge de status */
+/* Badges de status dos documentos */
 .status-badge {
   display: inline-block;
   padding: 6px 12px;
@@ -456,7 +473,7 @@ body {
   color: #155724;
 }
 
-/* Adicionando badge para tipo de documento */
+/* Badge para tipo de documento (NF-e, Boleto, etc) */
 .tipo-badge {
   display: inline-block;
   padding: 6px 12px;
@@ -468,7 +485,10 @@ body {
   text-transform: uppercase;
 }
 
-/* Menu de ações */
+/* ===========================
+   Menu de Ações
+   =========================== */
+
 .actions-menu {
   position: relative;
 }
@@ -491,11 +511,11 @@ body {
   color: #636e72;
 }
 
+/* Dropdown abre para cima para não ficar cortado */
 .dropdown-menu {
   position: absolute;
   right: 0;
-  /* top: 100%; */ /* REMOVIDO */
-  bottom: 100%; /* <-- ADICIONADO: Faz o menu abrir para cima */
+  bottom: 100%;
   background: white;
   border: 1px solid #dfe6e9;
   border-radius: 8px;
@@ -503,7 +523,7 @@ body {
   min-width: 150px;
   z-index: 100;
   display: none;
-  margin-bottom: 5px; /* <-- ADICIONADO: Um pequeno espaço do botão */
+  margin-bottom: 5px;
 }
 
 .dropdown-menu.active {
@@ -537,7 +557,7 @@ body {
   border-radius: 0 0 8px 8px;
 }
 
-/* Botões de ação finais */
+/* Botões de ação principais (Upload, Adicionar) */
 .action-buttons {
   display: flex;
   gap: 15px;
@@ -567,7 +587,10 @@ body {
   box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
 }
 
-/* Adicionando estilos para a mensagem de boas-vindas */
+/* ===========================
+   Mensagem de Boas-Vindas
+   =========================== */
+
 .welcome-message {
   display: flex;
   align-items: center;
@@ -582,8 +605,10 @@ body {
   font-weight: 700;
 }
 
-/* Responsividade */
-/* Ajuste responsivo para tabela maior */
+/* ===========================
+   Responsividade Mobile
+   =========================== */
+
 @media (max-width: 768px) {
   .main-content {
     margin-left: 0;
@@ -598,10 +623,15 @@ body {
     overflow-x: auto;
   }
 
+  /* Tabela fica rolável em telas pequenas */
   .documents-table {
-    min-width: 1200px; /* Aumentado para acomodar novas colunas */
+    min-width: 1200px;
   }
 }
+
+/* ===========================
+   Página de Login
+   =========================== */
 
 body.login-page {
   display: flex;
@@ -684,9 +714,11 @@ body.login-page {
   display: none;
 }
 
-/* Estilos para modais e formulários de documentos fiscais */
+/* ===========================
+   Modais e Formulários
+   =========================== */
 
-/* Modal Overlay */
+/* Fundo escuro por trás do modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -699,10 +731,10 @@ body.login-page {
   justify-content: center;
   z-index: 2000;
   padding: 20px;
-  backdrop-filter: blur(2px); /* Adicionado do bloco duplicado */
+  backdrop-filter: blur(2px);
 }
 
-/* Modal Content */
+/* Container do modal */
 .modal-content {
   background: white;
   border-radius: 16px;
@@ -720,11 +752,11 @@ body.login-page {
   max-width: 900px;
 }
 
-/* Estilo para modal de comentários */
 .modal-content.modal-comentarios {
-   max-width: 500px; /* Mantém o estilo específico */
+  max-width: 500px;
 }
 
+/* Animação suave de entrada do modal */
 @keyframes modalSlideIn {
   from {
     opacity: 0;
@@ -736,7 +768,7 @@ body.login-page {
   }
 }
 
-/* Modal Header */
+/* Cabeçalho do modal */
 .modal-header {
   display: flex;
   align-items: center;
@@ -774,7 +806,7 @@ body.login-page {
   font-size: 24px;
 }
 
-/* Modal Body */
+/* Corpo do modal com scroll */
 .modal-body {
   flex: 1;
   overflow-y: auto;
@@ -788,7 +820,7 @@ body.login-page {
   font-size: 0.95rem;
 }
 
-/* Modal Footer */
+/* Rodapé do modal com botões */
 .modal-footer {
   display: flex;
   align-items: center;
@@ -798,7 +830,7 @@ body.login-page {
   border-top: 1px solid #dfe6e9;
 }
 
-/* Form Grid */
+/* Layout dos formulários em grid */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -809,9 +841,10 @@ body.login-page {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 20px; /* Adicionado do bloco duplicado */
+  margin-bottom: 20px;
 }
 
+/* Campo que ocupa a largura toda */
 .form-group.full-width {
   grid-column: 1 / -1;
 }
@@ -846,6 +879,7 @@ body.login-page {
   box-shadow: 0 0 0 3px rgba(73, 96, 155, 0.1);
 }
 
+/* Campos desabilitados ou somente leitura */
 .form-group input:disabled,
 .form-group select:disabled,
 .form-group textarea:disabled,
@@ -865,7 +899,6 @@ body.login-page {
   min-height: 80px;
 }
 
-/* Estilo para .form-control (do bloco duplicado) */
 .form-control {
   width: 100%;
   padding: 12px;
@@ -890,7 +923,10 @@ body.login-page {
   color: #95a5a6;
 }
 
-/* Anexos List */
+/* ===========================
+   Anexos
+   =========================== */
+
 .anexos-list {
   display: flex;
   flex-direction: column;
@@ -935,16 +971,14 @@ body.login-page {
   text-transform: uppercase;
 }
 
-/* ======================================== */
-/* ESTILO ADICIONADO PARA O BOTÃO DE EXCLUIR */
-/* ======================================== */
+/* Botão de excluir anexo */
 .anexo-delete-btn {
   background: none;
   border: none;
   cursor: pointer;
-  color: #e74c3c; /* Cor vermelha para perigo */
+  color: #e74c3c;
   padding: 4px;
-  margin-left: auto; /* Joga o botão para a direita */
+  margin-left: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -962,7 +996,7 @@ body.login-page {
   color: #721c24;
 }
 
-/* Upload Section */
+/* Seção de upload de arquivos */
 .upload-section {
   display: flex;
   align-items: center;
@@ -978,7 +1012,7 @@ body.login-page {
   font-size: 14px;
 }
 
-/* Upload Area para XML */
+/* Área de drag and drop para XML */
 .upload-area {
   display: flex;
   flex-direction: column;
@@ -1034,7 +1068,7 @@ body.login-page {
   }
 }
 
-/* Ajustes adicionais para a tabela com 4 colunas de data */
+/* Ajustes para telas grandes (tabela com mais espaço) */
 @media (min-width: 1200px) {
   .documents-table {
     font-size: 14px;
@@ -1046,7 +1080,7 @@ body.login-page {
   }
 }
 
-/* Status processamento adicional */
+/* Badges adicionais de status */
 .status-badge.manual {
   background: #e8f5e9;
   color: #2e7d32;
@@ -1057,9 +1091,11 @@ body.login-page {
   color: #c2185b;
 }
 
-/* Adicionando estilos para Cadastro Base e Gestão de Usuários */
+/* ===========================
+   Cadastros Base e Gestão de Usuários
+   =========================== */
 
-/* Tabs Container */
+/* Container das abas */
 .tabs-container {
   background: white;
   border-radius: 12px;
@@ -1067,7 +1103,7 @@ body.login-page {
   overflow: hidden;
 }
 
-/* Tabs Navigation */
+/* Navegação das abas */
 .tabs {
   display: flex;
   border-bottom: 2px solid #dfe6e9;
@@ -1101,6 +1137,7 @@ body.login-page {
   color: #49609b;
 }
 
+/* Linha embaixo da aba ativa */
 .tab-btn.active::after {
   content: "";
   position: absolute;
@@ -1115,7 +1152,7 @@ body.login-page {
   font-size: 20px;
 }
 
-/* Tab Content */
+/* Conteúdo das abas */
 .tab-content {
   display: none;
   padding: 30px;
@@ -1125,7 +1162,7 @@ body.login-page {
   display: block;
 }
 
-/* Table Header com busca e botão */
+/* Cabeçalho da tabela com busca e botão */
 .table-header {
   display: flex;
   align-items: center;
@@ -1141,7 +1178,7 @@ body.login-page {
   margin: 0;
 }
 
-/* Data Table - Tabela genérica para listagens */
+/* Tabela genérica para listagens */
 .data-table {
   width: 100%;
   border-collapse: collapse;
@@ -1176,7 +1213,7 @@ body.login-page {
   color: #2d3436;
 }
 
-/* Responsividade adicional para Cadastros Base e Gestão de Usuários */
+/* Responsividade para cadastros */
 @media (max-width: 768px) {
   .tabs {
     flex-direction: column;
@@ -1205,15 +1242,14 @@ body.login-page {
   }
 }
 
-/* ========================================
-   ESTILOS PARA MODAIS DE COMENTÁRIOS E HISTÓRICO
-   ======================================== */
+/* ===========================
+   Histórico e Comentários
+   =========================== */
 
 .modal-historico {
   max-width: 600px;
 }
 
-/* Histórico */
 .historico-list {
   display: flex;
   flex-direction: column;
@@ -1231,7 +1267,7 @@ body.login-page {
 
 .historico-item:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-left-color: #007bff; /* Usando uma cor de destaque no hover */
+  border-left-color: #007bff;
 }
 
 .historico-header {
@@ -1293,8 +1329,7 @@ body.login-page {
   margin-bottom: 10px;
 }
 
-
-/* Status Badges */
+/* Badges de status específicos */
 .status-badge.provisionado {
   background-color: #d5f4e6;
   color: #27ae60;
@@ -1305,7 +1340,7 @@ body.login-page {
   color: #c0392b;
 }
 
-/* Botões do modal de histórico/comentários */
+/* Botões do modal de histórico */
 .btn-primary.btn-primary-confirmar {
   background-color: #3498db;
 }
@@ -1319,7 +1354,6 @@ body.login-page {
   background-color: #7f8c8d;
 }
 
-
 .action-confirm .material-symbols-sharp::before {
   content: "✓";
 }
@@ -1328,12 +1362,12 @@ body.login-page {
   content: "↻";
 }
 
-/* Responsive para modais de histórico/comentários */
+/* Responsividade para histórico */
 @media (max-width: 768px) {
   .modal-footer {
     flex-direction: column;
   }
-  
+
   .btn {
     width: 100%;
     justify-content: center;
@@ -1342,15 +1376,14 @@ body.login-page {
   .modal-content.historico {
     max-width: 90%;
   }
-  
+
   .historico-header {
     flex-direction: column;
     gap: 10px;
   }
 }
 
-/* ===== MODAL HISTÓRICO (Estilos específicos) ===== */
-
+/* Modal de histórico específico */
 .modal-content.historico {
   max-width: 700px;
   max-height: 80vh;
@@ -1382,6 +1415,7 @@ body.login-page {
   gap: 15px;
 }
 
+/* Badges de ação do histórico */
 .historico-acao {
   display: flex;
   align-items: center;
@@ -1472,23 +1506,23 @@ body.login-page {
   white-space: pre-wrap;
 }
 
-/* Estilos responsivos */
+/* Responsividade do histórico */
 @media (max-width: 768px) {
   .modal-content.historico {
     max-width: 90%;
   }
-  
+
   .historico-info-header {
     flex-direction: column;
     gap: 10px;
   }
 }
 
-/* ========================================
-   ESTILOS PARA A PÁGINA DE DASHBOARD
-   ======================================== */
+/* ===========================
+   Dashboard
+   =========================== */
 
-/* Grid dos KPIs */
+/* Grid dos indicadores principais (KPIs) */
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -1520,7 +1554,7 @@ body.login-page {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  flex-shrink: 0; /* Impede que o ícone encolha */
+  flex-shrink: 0;
 }
 
 .kpi-icon .material-symbols-sharp {
@@ -1547,7 +1581,7 @@ body.login-page {
   color: #2d3436;
 }
 
-/* Cores dos KPIs */
+/* Cores específicas para cada tipo de KPI */
 .kpi-card.kpi-provisionado { border-color: #27ae60; }
 .kpi-card.kpi-provisionado .kpi-icon { background: #27ae60; }
 
@@ -1560,11 +1594,10 @@ body.login-page {
 .kpi-card.kpi-revisar { border-color: #9b59b6; }
 .kpi-card.kpi-revisar .kpi-icon { background: #9b59b6; }
 
-
-/* Grid dos Gráficos */
+/* Grid dos gráficos (gráfico de barras maior que o de pizza) */
 .charts-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* Gráfico de barras maior */
+  grid-template-columns: 2fr 1fr;
   gap: 24px;
 }
 
@@ -1583,37 +1616,36 @@ body.login-page {
   text-align: center;
 }
 
-/* Canvas do gráfico (para responsividade) */
+/* Tamanhos dos gráficos */
 #graficoGastosFornecedor, #graficoDocsStatus {
   max-height: 350px;
   width: 100% !important;
 }
 
-/* Responsividade do Dashboard */
+/* Responsividade do dashboard */
 @media (max-width: 992px) {
   .charts-grid {
-    grid-template-columns: 1fr; /* Coluna única em telas menores */
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
   .kpi-grid {
-    grid-template-columns: 1fr; /* Coluna única em telas pequenas */
+    grid-template-columns: 1fr;
   }
 }
 
-/* ==========================================================
-   MODO DE ACESSIBILIDADE (ALTO CONTRASTE)
-   ========================================================== */
+/* ===========================
+   Modo de Alto Contraste (Acessibilidade)
+   =========================== */
 
-/* 1. Base da Página */
 body.accessibility-mode {
   background: #000000 !important;
   color: #FFFFFF !important;
-  font-size: 1.05em; /* Aumenta levemente a fonte base */
+  font-size: 1.05em;
 }
 
-/* 2. Textos Gerais (Títulos, parágrafos, labels) */
+/* Textos em branco para leitura clara */
 body.accessibility-mode h1,
 body.accessibility-mode h2,
 body.accessibility-mode h3,
@@ -1626,18 +1658,18 @@ body.accessibility-mode .kpi-title {
   color: #FFFFFF !important;
 }
 
-/* 3. Links e Navegação (Cor de Destaque) */
+/* Links em amarelo brilhante para destaque */
 body.accessibility-mode a,
 body.accessibility-mode .nav-link {
-  color: #FFFF00 !important; /* Amarelo Brilhante */
-  font-weight: 700; /* Mais peso para links */
+  color: #FFFF00 !important;
+  font-weight: 700;
 }
 body.accessibility-mode .nav-link:hover {
   background: #FFFF00 !important;
-  color: #000000 !important; /* Inverte na seleção */
+  color: #000000 !important;
 }
 
-/* 4. Contêineres Principais (Sidebar, Modais, Cards) */
+/* Todos os containers com fundo preto e borda branca */
 body.accessibility-mode .sidebar,
 body.accessibility-mode .main-content,
 body.accessibility-mode .filters-section,
@@ -1653,11 +1685,11 @@ body.accessibility-mode .historico-comentario,
 body.accessibility-mode .anexo-item,
 body.accessibility-mode .welcome-message h1 {
   background: #000000 !important;
-  border: 2px solid #FFFFFF !important; /* Bordas brancas visíveis */
-  box-shadow: none !important; /* Remove sombras */
+  border: 2px solid #FFFFFF !important;
+  box-shadow: none !important;
 }
 
-/* 5. Inputs e Formulários */
+/* Inputs com fundo escuro e texto branco */
 body.accessibility-mode input,
 body.accessibility-mode select,
 body.accessibility-mode textarea,
@@ -1672,63 +1704,62 @@ body.accessibility-mode .form-control {
 body.accessibility-mode input:focus,
 body.accessibility-mode select:focus,
 body.accessibility-mode textarea:focus {
-  border-color: #FFFF00 !important; /* Foco em amarelo */
+  border-color: #FFFF00 !important;
   box-shadow: none !important;
 }
 
-/* 6. Tabelas */
+/* Cabeçalhos de tabelas em amarelo */
 body.accessibility-mode .documents-table th,
 body.accessibility-mode .data-table th {
   background: #000000 !important;
-  color: #FFFF00 !important; /* Cabeçalhos em amarelo */
+  color: #FFFF00 !important;
   border-bottom: 3px solid #FFFFFF !important;
   font-size: 1.1em;
 }
 body.accessibility-mode .documents-table td,
 body.accessibility-mode .data-table td {
   color: #FFFFFF !important;
-  border-color: #555555 !important; /* Linhas de grade mais suaves */
+  border-color: #555555 !important;
 }
 body.accessibility-mode .documents-table tbody tr:hover,
 body.accessibility-mode .data-table tbody tr:hover {
-  background: #333333 !important; /* Destaque no hover */
+  background: #333333 !important;
 }
 
-/* 7. Badges (Status, Tipo, Ação) */
+/* Badges com cores brilhantes para alto contraste */
 body.accessibility-mode .status-badge,
 body.accessibility-mode .tipo-badge,
 body.accessibility-mode .acao-badge {
   border: 2px solid #000000;
-  color: #000000 !important; /* Texto preto para ler contra o fundo brilhante */
+  color: #000000 !important;
   font-weight: 900;
   font-size: 0.9em;
   padding: 8px 14px;
 }
 body.accessibility-mode .status-badge.pendente,
 body.accessibility-mode .status-badge.revisar,
-body.accessibility-mode .acao-revisar { 
-  background: #FFFF00 !important; /* Amarelo */
+body.accessibility-mode .acao-revisar {
+  background: #FFFF00 !important;
 }
 body.accessibility-mode .status-badge.provisionado,
 body.accessibility-mode .status-badge.aprovado,
-body.accessibility-mode .acao-confirmar { 
-  background: #00FF00 !important; /* Verde Brilhante */
+body.accessibility-mode .acao-confirmar {
+  background: #00FF00 !important;
 }
 body.accessibility-mode .status-badge.erro,
 body.accessibility-mode .status-badge.cancelado,
-body.accessibility-mode .status-badge.vencido { 
-  background: #FF0000 !important; /* Vermelho Brilhante */
-  color: #FFFFFF !important; /* Texto branco no vermelho */
+body.accessibility-mode .status-badge.vencido {
+  background: #FF0000 !important;
+  color: #FFFFFF !important;
   border-color: #FFFFFF;
 }
 body.accessibility-mode .tipo-badge,
 body.accessibility-mode .status-badge.processado,
 body.accessibility-mode .acao-badge {
-  background: #00FFFF !important; /* Ciano Brilhante */
+  background: #00FFFF !important;
 }
 
-
-/* 8. Botões */
+/* Botões com fundo preto, texto amarelo e borda amarela */
 body.accessibility-mode .btn,
 body.accessibility-mode .btn-primary,
 body.accessibility-mode .btn-secondary,
@@ -1737,7 +1768,7 @@ body.accessibility-mode .btn-upload,
 body.accessibility-mode .action-btn,
 body.accessibility-mode .dropdown-menu button {
   background: #000000 !important;
-  color: #FFFF00 !important; /* Texto amarelo */
+  color: #FFFF00 !important;
   border: 2px solid #FFFF00 !important;
   font-weight: 700;
   box-shadow: none;
@@ -1745,22 +1776,21 @@ body.accessibility-mode .dropdown-menu button {
 body.accessibility-mode .btn:hover,
 body.accessibility-mode .dropdown-menu button:hover {
   background: #FFFF00 !important;
-  color: #000000 !important; /* Inverte no hover */
+  color: #000000 !important;
   border-color: #FFFF00 !important;
 }
 
-/* Corrige o menu dropdown */
 body.accessibility-mode .dropdown-menu {
   border: 2px solid #FFFF00 !important;
 }
 
-/* Corrige os KPIs */
+/* KPIs com bordas coloridas para diferenciar */
 body.accessibility-mode .kpi-card {
   border: 2px solid #FFFFFF !important;
   border-left-width: 6px !important;
 }
 body.accessibility-mode .kpi-card .kpi-icon {
-  background: transparent !important; /* Remove o fundo do ícone */
+  background: transparent !important;
 }
 body.accessibility-mode .kpi-card .kpi-icon .material-symbols-sharp {
   color: #FFFFFF !important;
@@ -1770,7 +1800,7 @@ body.accessibility-mode .kpi-card.kpi-vencido { border-left-color: #FF0000 !impo
 body.accessibility-mode .kpi-card.kpi-pendente { border-left-color: #FFFF00 !important; }
 body.accessibility-mode .kpi-card.kpi-revisar { border-left-color: #00FFFF !important; }
 
-/* 9. Gráficos (Apenas esconde, pois customizar é complexo) */
+/* Gráficos são escondidos no modo de acessibilidade (difícil aplicar gráficos para pessoas com baixa visibilidade que sejam realmente legíveis, ideal deixar em textos explícitos como já temos no código) */
 body.accessibility-mode .charts-grid {
-  display: none; /* A forma mais simples de tratar os gráficos */
+  display: none;
 }
