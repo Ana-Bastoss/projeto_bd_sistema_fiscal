@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema Financeiro</title>
+    <link rel="icon" href="/assets/images/logorm.png" type="image/png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <aside class="sidebar">
+       <header class = "sidebar-header">
+        <a href="#" class = "header-logo">
+           <img src = "/assets/images/logorm.png" alt="Processing..." />
+        </a>
+        <button class = "toggler sidebar-toggler">
+            <span class="material-symbols-sharp">menu_open</span>
+        </button>
+       </header>
+
+       <nav class = "sidebar-nav">
+        <ul class = "nav-list primary-nav">
+            <!-- Menu será gerado dinamicamente pelo JavaScript -->
+        </ul>
+
+        <ul class = "nav-list secondary-nav">
+            <li class = "nav-item">
+                <a href = "#" class = "nav-link">
+                   <span class="nav-icon material-symbols-sharp">account_circle </span>
+                   <span class="nav-label">Meu Perfil</span>
+                </a>
+                <span class="nav-tooltip">Meu Perfil</span>
+            </li>
+
+            <li class="nav-item">
+                <a href="#" id="logoutBtn" class="nav-link">
+                    <span class="material-symbols-sharp">logout</span>
+                    <span class="nav-label">Logout</span>
+                </a>
+                <span class="nav-tooltip">Logout</span>
+            </li>
+
+        </ul>
+
+       </nav>
+    </aside>
+
+    <main class="main-content">
+        <!-- Conteúdo inicial padrão -->
+        <div class="welcome-message">
+            <h1>O que vamos fazer hoje?</h1>
+        </div>
+    </main>
+
+    <!-- Transformado footer em botão flutuante no canto inferior direito -->
+    <button id="accessibility-toggle" class="accessibility-btn" aria-pressed="false">
+        <span class="material-symbols-sharp">accessibility</span>
+        <span class="btn-text">Modo Acessibilidade</span>
+    </button>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

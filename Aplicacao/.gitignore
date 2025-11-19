@@ -1,0 +1,21 @@
+# --- Segredos e Chaves
+.env
+credentials.json
+
+# --- Python e Ambiente 
+__pycache__/
+*.pyc
+venv/
+.venv/
+.idea/
+.vscode/
+
+# --- Arquivos Gerados pelo Sistema 
+# Históricos locais criados pelo fallback
+historico_local_*.json
+
+# Uploads de usuários
+uploads/
+
+# Logs de erro se houverem erros em algum momento
+*.log

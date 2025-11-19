@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Sistema Bare</title>
+  <link rel="icon" href="/assets/images/logorm.png" type="image/png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body class="login-page">
+  <div class="login-wrapper">
+    <img src="/assets/images/logorm.png" alt="Logo Bare" class="login-logo" />
+    
+    <h2>Seja Bem-vindo à <span>BARE</span></h2>
+    <p class="login-subtitle">
+      Vamos começar juntos a construir um melhor futuro na sua empresa!
+    </p>
+
+    <form id="loginForm" class="login-form">
+      <input type="email" id="email" placeholder="E-mail" required />
+      <input type="password" id="senha" placeholder="Senha" required />
+      <button type="submit">Entrar</button>
+      <p id="erroLogin">Usuário ou senha incorretos.</p>
+    </form>
+  </div>
+
+  <script src="/static/js/login.js"></script>
+</body>
+</html>
