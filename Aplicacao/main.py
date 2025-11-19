@@ -1,3 +1,12 @@
+# ==============================================================================
+# ARQUIVO: main.py
+# DESCRIÇÃO: Backend principal da aplicação (FastAPI).
+#   - Gerenciamento de Rotas (Endpoints)
+#   - Conexão com Banco de Dados (MySQL via SQLAlchemy)
+#   - Lógica de Negócio (Login, Uploads, Processamento XML, Dashboards)
+#   - Integração com Firebase (Histórico de Auditoria)
+# ==============================================================================
+
 from fastapi import FastAPI, Request, Depends, File, UploadFile, Form, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -15,42 +24,64 @@ from typing import Optional
 import xml.etree.ElementTree as ET
 import chardet
 import traceback
-import pymysql # Adicionado para tratar erros de duplicidade
+import pymysql # Adicionado para tratar erros de duplicidade (IntegrityError)
 
+# --- IMPORTS LOCAIS ---
 from database import get_db, engine
-from firebase_historico import historico_db # Movido para cima com outros imports
+from firebase_historico import historico_db # Módulo de logs no Firebase
+
+# ==============================================================================
+# CONFIGURAÇÃO INICIAL DO APP
+# ==============================================================================
 
 app = FastAPI()
 
+# Configuração de arquivos estáticos (CSS, JS)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 
+# Configuração do diretório de Uploads
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
+# Configuração de Templates (Jinja2)
 templates = Jinja2Templates(directory="templates")
 
+# Configuração de Hash de Senhas (Bcrypt)
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+# Modelo de dados para Login
 class LoginRequest(BaseModel):
     email: str
     senha: str
 
+# ==============================================================================
+# ROTAS DE NAVEGAÇÃO (FRONTEND)
+# ==============================================================================
+
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
+    """Rota raiz: Redireciona para o login."""
     return templates.TemplateResponse("login.html", {"request": request})
 
 @app.get("/login", response_class=HTMLResponse)
 async def login_page(request: Request):
+    """Renderiza a página de login."""
     return templates.TemplateResponse("login.html", {"request": request})
 
 @app.get("/projeto", response_class=HTMLResponse)
 async def projeto_page(request: Request):
+    """Renderiza a página principal (Dashboard/SPA)."""
     return templates.TemplateResponse("projeto.html", {"request": request})
+
+# ==============================================================================
+# API: UTILITÁRIOS E LOGIN
+# ==============================================================================
 
 @app.get("/api/test-db")
 async def test_database(db: Session = Depends(get_db)):
+    """Testa a conexão com o banco de dados MySQL."""
     try:
         result = db.execute(text("SELECT DATABASE() as db_name, VERSION() as version"))
         row = result.fetchone()
@@ -68,6 +99,10 @@ async def test_database(db: Session = Depends(get_db)):
 
 @app.post("/api/login")
 async def fazer_login(dados: LoginRequest, db: Session = Depends(get_db)):
+    """
+    Processa o login do usuário.
+    Verifica credenciais, hash da senha e retorna o token + permissões.
+    """
     try:
         query = text("""
             SELECT 
@@ -91,6 +126,7 @@ async def fazer_login(dados: LoginRequest, db: Session = Depends(get_db)):
         
         senha_hash = usuario[3]
         
+        # Verifica a senha (compatibilidade com versões antigas e novas de hash)
         if senha_hash and (senha_hash.startswith('$2b$') or senha_hash.startswith('$2a$')):
             if not pwd_context.verify(dados.senha, senha_hash):
                 return JSONResponse(
@@ -104,6 +140,7 @@ async def fazer_login(dados: LoginRequest, db: Session = Depends(get_db)):
                     content={"success": False, "message": "Senha incorreta"}
                 )
         
+        # Processa as permissões do usuário (JSON)
         permissoes = usuario[6]
         if permissoes and isinstance(permissoes, str):
             try:
@@ -134,6 +171,10 @@ async def fazer_login(dados: LoginRequest, db: Session = Depends(get_db)):
             content={"success": False, "message": f"Erro no servidor: {str(e)}"}
         )
 
+# ==============================================================================
+# API: DOCUMENTOS FISCAIS (Listagem e Detalhes)
+# ==============================================================================
+
 @app.get("/api/documentos-fiscais")
 async def listar_documentos(
     search: str = None,
@@ -145,6 +186,10 @@ async def listar_documentos(
     fornecedor_id: int = None,
     db: Session = Depends(get_db)
 ):
+    """
+    Lista documentos fiscais com suporte a múltiplos filtros dinâmicos.
+    Constrói a query SQL baseada nos parâmetros opcionais fornecidos.
+    """
     try:
         print(f"[v0 Backend] Parâmetros recebidos: search={search}, tipo_data={tipo_data}, data_inicial={data_inicial}, data_final={data_final}")
         
@@ -237,6 +282,12 @@ async def listar_documentos(
 
 @app.get("/api/documentos-fiscais/{doc_id}")
 async def buscar_documento(doc_id: int, db: Session = Depends(get_db)):
+    """
+    Busca os detalhes completos de um documento, incluindo:
+    - Dados cadastrais
+    - Empresa e Fornecedor
+    - Lista de Anexos vinculados
+    """
     try:
         query = text("""
             SELECT 
@@ -311,6 +362,10 @@ async def buscar_documento(doc_id: int, db: Session = Depends(get_db)):
         traceback.print_exc()
         return JSONResponse(status_code=500, content={"erro": str(e)})
 
+# ==============================================================================
+# API: UPLOAD E IMPORTAÇÃO (Arquivos e XML)
+# ==============================================================================
+
 @app.post("/api/upload-arquivo")
 async def upload_arquivo(
     file: UploadFile = File(...),
@@ -318,6 +373,11 @@ async def upload_arquivo(
     tipo_relacao: str = Form("COMPLEMENTAR"),
     db: Session = Depends(get_db)
 ):
+    """
+    Recebe um arquivo, salva no disco (organizado por Empresa/Ano/Mês) e
+    cria o registro na tabela 'anexos'. Se 'documento_id' for passado,
+    cria o vínculo na tabela 'documento_anexos'.
+    """
     try:
         # Validar tipo de arquivo
         ext = file.filename.split(".")[-1].upper()
@@ -403,12 +463,11 @@ async def upload_arquivo(
         db.rollback()
         return JSONResponse(status_code=500, content={"erro": str(e)})
 
-# ==========================================================
-# FUNÇÃO detect_encoding (HELPER PARA XML)
-# ==========================================================
+# Função Helper para XML
 def detect_encoding(content: bytes) -> str:
     """
     Detecta o encoding de um arquivo XML, pois muitos vêm como 'iso-8859-1'.
+    Tenta ler o cabeçalho XML ou usa chardet como fallback.
     """
     try:
         # Tenta ler o cabeçalho XML (ex: <?xml version="1.0" encoding="UTF-8"?>)
@@ -430,14 +489,19 @@ def detect_encoding(content: bytes) -> str:
         
     return encoding
 
-# ==========================================================
-# FUNÇÃO IMPORTAR XML (CORRIGIDA E UNIFICADA)
-# ==========================================================
 @app.post("/api/importar-xml")
 async def importar_xml(
     file: UploadFile = File(...),
     db: Session = Depends(get_db)
 ):
+    """
+    Processa a importação de XMLs (NF-e e NFS-e).
+    1. Detecta encoding e faz parse.
+    2. Identifica se é NF-e (Federal) ou NFS-e (Serviço - Padrão SP).
+    3. Extrai dados: Número, Valor, Datas, CNPJ Fornecedor.
+    4. Cria o Fornecedor se não existir.
+    5. Faz 'Upsert' do Documento Fiscal (Insere ou Atualiza se a chave já existir).
+    """
     try:
         if not file.filename.lower().endswith('.xml'):
             return JSONResponse(status_code=400, content={"success": False, "erro": "Apenas arquivos .xml são permitidos"})
@@ -654,6 +718,10 @@ async def importar_xml(
         traceback.print_exc()
         return JSONResponse(status_code=500, content={"success": False, "erro": str(e)})
 
+# ==============================================================================
+# API: CRUD DE DOCUMENTOS (Manual e Edição)
+# ==============================================================================
+
 @app.post("/api/documentos-fiscais")
 async def cadastrar_documento(
     empresa_id: int = Form(...),
@@ -855,6 +923,10 @@ async def excluir_anexo(anexo_id: int, db: Session = Depends(get_db)):
         if "foreign key constraint" in str(e).lower():
              return JSONResponse(status_code=400, content={"erro": "Não é possível excluir o anexo, pois está em uso."})
         return JSONResponse(status_code=500, content={"erro": str(e)})
+
+# ==============================================================================
+# API: CADASTROS BASE (Fornecedores, Empresas, Usuários)
+# ==============================================================================
 
 @app.get("/api/fornecedores")
 async def listar_fornecedores(db: Session = Depends(get_db)):
@@ -1163,7 +1235,7 @@ async def buscar_fornecedor(fornecedor_id: int, db: Session = Depends(get_db)):
             "endereco_cep": row[12],
             "email": row[13],
             "telefone": row[14],
-            "ativo": bool(row[15])
+            "ativa": bool(row[15])
         }
     except Exception as e:
         return JSONResponse(status_code=500, content={"erro": str(e)})
@@ -1190,8 +1262,8 @@ async def criar_fornecedor(
     try:
         query = text("""
             INSERT INTO fornecedores (empresa_id, cnpj_cpf, tipo_pessoa, razao_social, nome_fantasia,
-                                       endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
-                                       endereco_cidade, endereco_uf, endereco_cep, email, telefone, ativo)
+                                      endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
+                                      endereco_cidade, endereco_uf, endereco_cep, email, telefone, ativo)
             VALUES (:empresa_id, :cnpj_cpf, :tipo_pessoa, :razao_social, :nome_fantasia,
                     :endereco_logradouro, :endereco_numero, :endereco_complemento, :endereco_bairro,
                     :endereco_cidade, :endereco_uf, :endereco_cep, :email, :telefone, :ativo)
@@ -1223,7 +1295,7 @@ async def criar_fornecedor(
         db.rollback()
         
         # ========================================
-        # MUDANÇA AQUI
+        # TRATAMENTO DE ERRO DE DUPLICIDADE
         # ========================================
         print("--- ERRO DETALHADO NO CADASTRO DE FORNECEDOR ---")
         traceback.print_exc()  # <-- 2. Isso vai imprimir o erro completo no console
@@ -1516,6 +1588,10 @@ async def listar_roles(db: Session = Depends(get_db)):
     except Exception as e:
         return JSONResponse(status_code=500, content={"erro": str(e)})
 
+# ==============================================================================
+# API: PROVISIONAMENTOS E FINANCEIRO
+# ==============================================================================
+
 @app.get("/api/provisionamentos")
 async def listar_provisionamentos(
     status: str = None,
@@ -1694,6 +1770,10 @@ async def listar_contas_pagar(
         }
     except Exception as e:
         return JSONResponse(status_code=500, content={"erro": str(e)})
+
+# ==============================================================================
+# API: REMESSAS CNAB E RETORNO BANCÁRIO
+# ==============================================================================
 
 @app.get("/api/remessas-cnab")
 async def listar_remessas(
@@ -1919,9 +1999,9 @@ async def processar_retorno(
         traceback.print_exc()
         return JSONResponse(status_code=500, content={"erro": str(e)})
 
-# ========================================
-# EXTENSÕES PARA DOCUMENTOS FISCAIS
-# ========================================
+# ==============================================================================
+# API: APROVAÇÃO E WORKFLOW DE DOCUMENTOS
+# ==============================================================================
 
 @app.post("/api/documentos-fiscais/{doc_id}/confirmar")
 async def confirmar_documento(
@@ -2123,6 +2203,10 @@ async def obter_historico_documento(
         print(f"[v0 Backend] Erro ao obter histórico: {str(e)}")
         return JSONResponse(status_code=500, content={"erro": str(e)})
 
+# ==============================================================================
+# API: AUDITORIA E LOGS
+# ==============================================================================
+
 @app.get("/api/auditoria/log_atividades")
 async def get_log_atividades(db: Session = Depends(get_db)):
     """
@@ -2218,7 +2302,11 @@ async def get_log_atividades(db: Session = Depends(get_db)):
         if "FUNCTION" in str(e).upper() and "FORMAT" in str(e).upper():
              return JSONResponse(status_code=500, content={"erro": "Função 'FORMAT' não encontrada. Verifique a versão do seu MySQL."})
         return JSONResponse(status_code=500, content={"erro": str(e)})
-    
+
+# ==============================================================================
+# API: DASHBOARD E GRÁFICOS
+# ==============================================================================
+
 @app.get("/api/dashboard/kpis")
 async def get_dashboard_kpis(db: Session = Depends(get_db)):
     """
